@@ -15,20 +15,38 @@ variables that you set up in the .env file*/
 // const dotenv = require('dotenv');
 // dotenv.config();
 
-// const api_key = process.env.API_KEY;
-// const api_url = process.env.API_URL;
+const api_key = process.env.API_KEY;
+const api_url = process.env.API_URL;
 
 function getNLUInstance() {
-    const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
-    const { IamAuthenticator } = require('ibm-watson/auth');
+	const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-    const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
-        version: '2021-08-01',
-        authenticator: new IamAuthenticator ({
-            apikey: api_key
-        }),
-        serviceUrl: api_url
-    });
+const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
+  version: '2022-04-07',
+  authenticator: new IamAuthenticator({
+    apikey: 'nmp8AMCSNMbsbVeX6g1wf25_lQ2H92aCgHnAH4bgdrNZ',
+  }),
+  serviceUrl: 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/eaf8ceb5-01f8-4f3a-b7d7-c819cad48ce0',
+});
+
+const analyzeParams = {
+  'url': 'www.ibm.com',
+  'features': {
+    'categories': {
+      'limit': 3
+    }
+  }
+};
+
+naturalLanguageUnderstanding.analyze(analyzeParams)
+  .then(analysisResults => {
+    console.log(JSON.stringify(analysisResults, null, 2));
+  })
+  .catch(err => {
+    console.log('error:', err);
+  });
+
     return naturalLanguageUnderstanding;
 }
 
