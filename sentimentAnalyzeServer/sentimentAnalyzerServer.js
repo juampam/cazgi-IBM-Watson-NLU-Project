@@ -19,34 +19,34 @@ const api_url = process.env.API_URL;
 
 function getNLUInstance() {
 	const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
-const { IamAuthenticator } = require('ibm-watson/auth');
+	const { IamAuthenticator } = require('ibm-watson/auth');
 
-const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
-  version: '2022-04-07',
-  authenticator: new IamAuthenticator({
-    apikey: api_key,
-  }),
-  serviceUrl: api_url,
-});
+	const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
+		version: '2022-04-07',
+		authenticator: new IamAuthenticator({
+			apikey: api_key,
+		}),
+		serviceUrl: api_url,
+	});
 
-const analyzeParams = {
-  'url': 'www.ibm.com',
-  'features': {
-    'categories': {
-      'limit': 3
-    }
-  }
-};
+	const analyzeParams = {
+		'url': 'www.ibm.com',
+		'features': {
+			'categories': {
+				'limit': 3
+			}
+		}
+	};
 
-naturalLanguageUnderstanding.analyze(analyzeParams)
-  .then(analysisResults => {
-    console.log(JSON.stringify(analysisResults, null, 2));
-  })
-  .catch(err => {
-    console.log('error:', err);
-  });
+	naturalLanguageUnderstanding.analyze(analyzeParams)
+		.then(analysisResults => {
+			console.log(JSON.stringify(analysisResults, null, 2));
+		})
+		.catch(err => {
+			console.log('error:', err);
+		});
 
-    return naturalLanguageUnderstanding;
+	return naturalLanguageUnderstanding;
 }
 
 
